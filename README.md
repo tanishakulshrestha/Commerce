@@ -39,6 +39,7 @@ Backend: Django (Python)
 Database: SQLite
 
 Frontend: HTML, CSS (Django Templates)
+📂 Project Structure
 commerce/
 │
 ├── auctions/
@@ -53,10 +54,9 @@ commerce/
 │   ├── urls.py
 │
 └── manage.py
+
 ⚙️ How to Run Locally
 # Clone the repository
-git clone https://github.com/your-username/commerce-auction.git
-
 # Move into project directory
 cd commerce
 
