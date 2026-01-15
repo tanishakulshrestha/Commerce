@@ -24,15 +24,14 @@
                 <a href="{% url 'login' %}">Log In</a>
                 <a href="{% url 'register' %}">Register</a>
             {% endif %}
-<<<<<<< HEAD
-=======
+
             {% if user.is_authenticated %}
     <a href="{% url 'create_listing' %}" class="nav-link">
         ➕ Create Listing
     </a>
 {% endif %}
 
->>>>>>> afa1184cf0f46363e7f76887524811c32dccc145
+
         </div>
     </div>
 

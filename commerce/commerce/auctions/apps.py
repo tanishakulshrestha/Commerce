@@ -1,16 +1,11 @@
-from django.apps import AppConfig
-<<<<<<< HEAD
-
-
-class AuctionsConfig(AppConfig):
-    name = 'auctions'
-=======
 import joblib
 import os
+from django.apps import AppConfig
+
 
 class AuctionsConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'auctions'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "auctions"
 
     def ready(self):
         from django.conf import settings
@@ -23,4 +18,4 @@ class AuctionsConfig(AppConfig):
         )
 
         self.model = joblib.load(model_path)
->>>>>>> afa1184cf0f46363e7f76887524811c32dccc145
+
