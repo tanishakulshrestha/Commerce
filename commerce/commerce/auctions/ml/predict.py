@@ -1,12 +1,29 @@
-import joblib
 import os
+import joblib
 import numpy as np
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(
+    os.path.dirname(
+        os.path.dirname(
+            os.path.dirname(os.path.abspath(__file__))
+        )
+    )
+)
 
-model_path = os.path.join(BASE_DIR, "price_model.pkl")
-model = joblib.load(model_path)
+MODEL_PATH = os.path.join(
+    BASE_DIR,
+    "commerce",
+    "auctions",
+    "ml",
+    "price_model.pkl"
+)
+
+def load_model():
+    return joblib.load(MODEL_PATH)
+
 def predict_price(category, title_length, description_length, number_of_images):
+    model = load_model()
+
     category_map = {
         "Books": 0,
         "Electronics": 1,
@@ -19,13 +36,13 @@ def predict_price(category, title_length, description_length, number_of_images):
     category = category.strip().title()
 
     if category not in category_map:
-        raise ValueError(f"Unknown category: {category}")
+        return None  # safe for production
 
-    category_encoded = category_map[category]
+    X = np.array([[
+        category_map[category],
+        title_length,
+        description_length,
+        number_of_images
+    ]])
 
-    X = np.array([[category_encoded,
-                   title_length,
-                   description_length,
-                   number_of_images]])
-
-    return round(model.predict(X)[0], 2)
+    return round(float(model.predict(X)[0]), 2)
