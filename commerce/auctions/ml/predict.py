@@ -1,11 +1,14 @@
 import joblib
 import os
 import numpy as np
+import os
+import joblib
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+MODEL_PATH = os.path.join(BASE_DIR, "commerce", "auctions", "ml", "price_model.pkl")
 
-model_path = os.path.join(BASE_DIR, "price_model.pkl")
-model = joblib.load(model_path)
+model = joblib.load(MODEL_PATH)
+
 def predict_price(category, title_length, description_length, number_of_images):
     category_map = {
         "Books": 0,
