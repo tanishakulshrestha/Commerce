@@ -1,13 +1,32 @@
-import joblib
 import os
+import joblib
 import numpy as np
-import os
-import joblib
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-MODEL_PATH = os.path.join(BASE_DIR, "commerce", "auctions", "ml", "price_model.pkl")
+BASE_DIR = os.path.dirname(
+    os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__))
+    )
+)
 
-model = joblib.load(MODEL_PATH)
+MODEL_PATH = os.path.join(
+    BASE_DIR,
+    "commerce",
+    "auctions",
+    "ml",
+    "price_model.pkl"
+)
+
+# 👇 DO NOT load model at import time
+_model = None
+
+def get_model():
+    global _model
+    if _model is None:
+        if not os.path.exists(MODEL_PATH):
+            raise FileNotFoundError(f"ML model not found at {MODEL_PATH}")
+        _model = joblib.load(MODEL_PATH)
+    return _model
+
 
 def predict_price(category, title_length, description_length, number_of_images):
     category_map = {
@@ -26,9 +45,12 @@ def predict_price(category, title_length, description_length, number_of_images):
 
     category_encoded = category_map[category]
 
-    X = np.array([[category_encoded,
-                   title_length,
-                   description_length,
-                   number_of_images]])
+    X = np.array([[
+        category_encoded,
+        title_length,
+        description_length,
+        number_of_images
+    ]])
 
-    return round(model.predict(X)[0], 2)
+    model = get_model()   # ✅ lazy load
+    return round(float(model.predict(X)[0]), 2)
