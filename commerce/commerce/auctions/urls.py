@@ -13,10 +13,5 @@ urlpatterns = [
     path("watchlist/<int:listing_id>", views.toggle_watchlist, name="toggle_watchlist"),
     path("watchlist", views.watchlist, name="watchlist"),
     path("comment/<int:listing_id>", views.add_comment, name="add_comment"),
-<<<<<<< HEAD
     
-=======
-    path("create/", views.create_listing, name="create_listing"),
-
->>>>>>> afa1184cf0f46363e7f76887524811c32dccc145
 ]
