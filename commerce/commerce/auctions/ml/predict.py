@@ -2,7 +2,6 @@ import os
 import joblib
 import numpy as np
 
-# /opt/render/project/src
 BASE_DIR = os.path.dirname(
     os.path.dirname(
         os.path.dirname(
@@ -28,11 +27,8 @@ def get_model():
         _model = joblib.load(MODEL_PATH)
     return _model
 
-def load_model():
-    return joblib.load(MODEL_PATH)
-
 def predict_price(category, title_length, description_length, number_of_images):
-    model = load_model()
+    model = get_model()
 
     category_map = {
         "Books": 0,
@@ -44,9 +40,8 @@ def predict_price(category, title_length, description_length, number_of_images):
     }
 
     category = category.strip().title()
-
     if category not in category_map:
-        return None  # safe for production
+        return None
 
     X = np.array([[
         category_map[category],
