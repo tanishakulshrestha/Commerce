@@ -8,6 +8,8 @@ from django.urls import reverse
 from .models import User, Listing, Bid, Comment
 from django.contrib import messages
 from decimal import Decimal
+from auctions.ml.predict import predict_price
+
 <<<<<<< HEAD
 
 =======
@@ -100,6 +102,20 @@ def create(request):
         return redirect("index")
 
     return render(request, "auctions/create.html")
+
+def listing(request, listing_id):
+    from auctions.ml.predict import predict_price   # 👈 IMPORT HERE
+
+    listing = get_object_or_404(Listing, pk=listing_id)
+
+    predicted_price = predict_price(
+        listing.category,
+        len(listing.title),
+        len(listing.description),
+        1  # or your image count logic
+    )
+
+    ...
 
 
 # -----------------------------
