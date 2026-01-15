@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+
+# Django
+db.sqlite3
+staticfiles/
+
+# Environment
+.env
+venv/
+
+# ML models
+*.pkl
+
+# OS
+.DS_Store

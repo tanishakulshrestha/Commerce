@@ -8,15 +8,7 @@ from django.urls import reverse
 from .models import User, Listing, Bid, Comment
 from django.contrib import messages
 from decimal import Decimal
-<<<<<<< HEAD
 
-=======
-from .ml.predict import predict_price
-from django.apps import apps
-import pandas as pd
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
->>>>>>> afa1184cf0f46363e7f76887524811c32dccc145
 
 # -----------------------------
 # INDEX / ACTIVE LISTINGS
@@ -108,34 +100,18 @@ def create(request):
 def listing(request, listing_id):
     listing = get_object_or_404(Listing, pk=listing_id)
 
-<<<<<<< HEAD
-=======
-    predicted_price = predict_price(listing)
-
->>>>>>> afa1184cf0f46363e7f76887524811c32dccc145
     bids = listing.bids.all()
     highest_bid = bids.order_by("-amount").first()
     current_price = highest_bid.amount if highest_bid else listing.starting_bid
     comments = listing.comments.order_by("-created_at")
-<<<<<<< HEAD
-=======
-
->>>>>>> afa1184cf0f46363e7f76887524811c32dccc145
     return render(request, "auctions/listing.html", {
         "listing": listing,
         "bids_count": bids.count(),
         "highest_bid": highest_bid,
         "current_price": current_price,
-<<<<<<< HEAD
         "comments": comments
 
     })
-=======
-        "comments": comments,
-        "predicted_price": predicted_price
-    })
-
->>>>>>> afa1184cf0f46363e7f76887524811c32dccc145
 @login_required
 def watchlist(request):
     listings = request.user.watchlisted_items.all()
@@ -156,51 +132,7 @@ def toggle_watchlist(request, listing_id):
 
     return redirect("listing", listing_id=listing.id)
 
-<<<<<<< HEAD
 
-=======
-def listing_detail(request, listing_id):
-    listing = Listing.objects.get(id=listing_id)
-
-    title_length = len(listing.title)
-    description_length = len(listing.description)
-    number_of_images = listing.images.count()
-
-    predicted_price = predict_price(
-        listing.category,
-        title_length,
-        description_length,
-        number_of_images
-    )
-
-    return render(request, "auctions/listing.html", {
-        "listing": listing,
-        "predicted_price": predicted_price
-    })
-
-@login_required
-def create_listing(request):
-    if request.method == "POST":
-        title = request.POST["title"]
-        description = request.POST["description"]
-        starting_bid = request.POST["starting_bid"]
-        category = request.POST["category"]
-        image_url = request.POST.get("image_url")
-
-        listing = Listing.objects.create(
-            title=title,
-            description=description,
-            starting_bid=starting_bid,
-            category=category,
-            image_url=image_url,
-            owner=request.user
-        )
-
-        messages.success(request, "Listing created successfully!")
-        return redirect("listing", listing_id=listing.id)
-
-    return render(request, "auctions/create_listing.html")
->>>>>>> afa1184cf0f46363e7f76887524811c32dccc145
 
 # -----------------------------
 # PLACE BID
@@ -265,10 +197,6 @@ def toggle_watchlist(request, listing_id):
 
     return redirect("listing", listing_id=listing.id)
 @login_required
-<<<<<<< HEAD
-=======
-
->>>>>>> afa1184cf0f46363e7f76887524811c32dccc145
 def add_comment(request, listing_id):
     listing = get_object_or_404(Listing, pk=listing_id)
 
@@ -284,22 +212,3 @@ def add_comment(request, listing_id):
     )
 
     return redirect("listing", listing_id=listing.id)
-<<<<<<< HEAD
-=======
-
-def predict_price(listing):
-    app_config = apps.get_app_config("auctions")
-    model = app_config.model
-
-    import pandas as pd
-
-    data = pd.DataFrame([{
-        "category": listing.category,
-        "title_length": len(listing.title),
-        "description_length": len(listing.description),
-        "number_of_images": 1 if listing.image_url else 0
-    }])
-
-    predicted_price = model.predict(data)[0]
-    return round(float(predicted_price), 2)
->>>>>>> afa1184cf0f46363e7f76887524811c32dccc145

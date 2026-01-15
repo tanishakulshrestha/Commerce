@@ -83,10 +83,3 @@ class Comment(models.Model):
     )
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-<<<<<<< HEAD
-=======
-
-class ListingImage(models.Model):
-    listing = models.ForeignKey(Listing, related_name="images", on_delete=models.CASCADE)
-    image = models.ImageField(upload_to="listing_images/")
->>>>>>> afa1184cf0f46363e7f76887524811c32dccc145
