@@ -2,6 +2,7 @@ import os
 import joblib
 import numpy as np
 
+# /opt/render/project/src
 BASE_DIR = os.path.dirname(
     os.path.dirname(
         os.path.dirname(
@@ -13,10 +14,19 @@ BASE_DIR = os.path.dirname(
 MODEL_PATH = os.path.join(
     BASE_DIR,
     "commerce",
+    "commerce",
     "auctions",
     "ml",
     "price_model.pkl"
 )
+
+_model = None
+
+def get_model():
+    global _model
+    if _model is None:
+        _model = joblib.load(MODEL_PATH)
+    return _model
 
 def load_model():
     return joblib.load(MODEL_PATH)
