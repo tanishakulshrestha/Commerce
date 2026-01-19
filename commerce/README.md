@@ -1,5 +1,5 @@
 # Commerce
-An eBay-like online auction web application built using Django, where users can create listings, place bids, manage auctions, and track winners.
+An eBay-like online auction web application built using Django, where users can create listings, place bids, manage auctions, and track winner also with a bid price pridictor integrated using ML regression system.
 🚀 Features
 
 🔐 User Authentication (Register / Login / Logout)
